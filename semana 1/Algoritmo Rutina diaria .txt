@@ -1,0 +1,24 @@
+Inicio
+1. Me despierto
+2. Me levanto de la cama
+3. Tomo mi paño de baño
+4. Voy al Baño
+5. Abro la ducha
+si el agua de la ducha esta caliente entro
+Sino espero a que este caliente
+6. Salgo de la ducha
+7. Mientras este humedo, paso el paño hasta secar
+   Abro el closet, y busco mi ropa
+9. Me visto
+10. Si tengo hambre prepraro mi desayuno
+    Voy a mi oficina
+enciendo mi computadora
+11. Empiezo a trabajar
+12. Mientras tenga casos pendientes, los actulizo hasta no tener ninguno
+13. Si, no tengo hambre sigo trabjando, sino me preparo y tomo mi lunch
+14. Si son las 6PM dejo de trabajar
+      Si dejo de tranajar apago la computadora
+15. Si tengo hambre hago la cena, sino me pongo a ver una serie
+16. Si me siento cansado me voy a acostar
+	me duermo 
+fin
