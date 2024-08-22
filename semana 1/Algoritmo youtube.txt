@@ -1,0 +1,16 @@
+inicio
+conseguir un dispositivo para reproducir video  y acceso a internet
+Si se consigue una computadora 
+	Dar doble click a algun buscador 
+	Dar click en la barra de buscador 
+	ingresar la direccion de youtube.com
+	dar click al video deseado 
+sino, si tiene un telefono o tablet
+	si aun no tiene la app descargarla del app store 
+	cuando la app este descargada, abrirla 
+	ingresar o buscar el video deseado 
+Sino, conseguir uno prestado
+Mientras el video este en reproducion 
+	mirar el video 
+Cerrar la aplicacion o pagina 
+fin 

@@ -1,0 +1,97 @@
+<mxfile host="app.diagrams.net" modified="2024-06-01T00:33:25.631Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="0XQyKVerBvZ_cQiCBxu3" version="24.4.13" type="device">
+  <diagram name="Page-1" id="fyX2fSGgWxatfmf_rGhj">
+    <mxGraphModel dx="1434" dy="772" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="uObtErdlk-p-zNJw72TR-1" value="inicio" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="10" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-2" target="uObtErdlk-p-zNJw72TR-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-2" value="mostrar &quot;Por favor ingrese el primer numero&quot;" style="shape=display;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="70" width="290" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.534;entryY=0.033;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-1" target="uObtErdlk-p-zNJw72TR-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-6" target="uObtErdlk-p-zNJw72TR-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-6" value="primer_numero" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="335" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-8" target="uObtErdlk-p-zNJw72TR-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-8" value="mostrar &quot;Por favor ingrese el segundo numero&quot;" style="shape=display;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="260" width="290" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-10" value="Pedir segundo_numero" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="315" y="340" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-12" target="uObtErdlk-p-zNJw72TR-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-12" value="Si primer_numero &amp;gt; segundo_numero" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="272.5" y="430" width="245" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-13" target="uObtErdlk-p-zNJw72TR-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-13" value="nuevo_orden_primero= segundo_numero" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="570" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-14" target="uObtErdlk-p-zNJw72TR-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-14" value="nuevo_order_segundo = primer_numero" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="680" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-17" target="uObtErdlk-p-zNJw72TR-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-17" value="&amp;nbsp;&quot;Los numero ingresados son: &quot;" style="shape=display;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="565" y="790" width="250" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-18" target="uObtErdlk-p-zNJw72TR-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-18" value="&amp;nbsp;nuevo_order_segundo" style="shape=display;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="960" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-19" target="uObtErdlk-p-zNJw72TR-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-19" value="&amp;nbsp;nuevo_orden_primero" style="shape=display;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="880" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-24" target="uObtErdlk-p-zNJw72TR-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-24" value="&amp;nbsp;&quot;Los numero ingresados son: &quot;" style="shape=display;whiteSpace=wrap;html=1;size=0.2;" vertex="1" parent="1">
+          <mxGeometry x="30" y="620" width="250" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-25" target="uObtErdlk-p-zNJw72TR-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-25" value="primer_numero" style="shape=display;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="740" width="250" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-26" target="uObtErdlk-p-zNJw72TR-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-26" value="segundo_numero" style="shape=display;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="35" y="840" width="240" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=137.5;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="uObtErdlk-p-zNJw72TR-12" target="uObtErdlk-p-zNJw72TR-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uObtErdlk-p-zNJw72TR-30" value="fin" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="1050" width="100" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
