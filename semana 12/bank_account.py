@@ -12,7 +12,6 @@ class SavingsAccount(BankAccount):
     def __init__(self, min_balance):
         self.min_balance = min_balance
     
-#pregunta por que si en los metodos de Bankaccount tengo que poner el self?
     def bank_operation(self,operation_choose,amount):
         if operation_choose == '1':
             BankAccount.add_money(self,amount)
