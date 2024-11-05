@@ -27,7 +27,7 @@ def request_numbers(number_list):
 
 def bubble_sort_list(number_list):
     for first_index in range(len(number_list) -1,0,-1):
-        for sort_index in range(len(number_list)-1,0,-1): #preguntar por la optimizacion de este -firts_index
+        for sort_index in range(len(number_list)-1,0,-1): 
             sleep(1)
             print(f'-- Iteration {first_index}, {sort_index}. Current element: {number_list[sort_index]}, Next element: {number_list[sort_index - 1]}')
             if number_list[sort_index] > number_list[sort_index - 1]:

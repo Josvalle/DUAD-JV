@@ -1,5 +1,5 @@
 def loop_to_validate_input(): # O(1)
-    while  True: # O(1)  #esto seria un  O(n) o un 0(1) dado a que solo corre una unica vez  
+    while  True: # O(1)  
         try:
             number = int(input(f'Please enter a number between the 0 - 100: ')) #0(1)
             if 0<= number <=100:#0(1)
