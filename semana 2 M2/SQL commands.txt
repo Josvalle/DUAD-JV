@@ -1,0 +1,166 @@
+******************Creacion de tablas************************
+
+CREATE TABLE products (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	code CHAR(8) NOT NULL,
+	name VARCHAR(25) NOT NULL,
+	price INT DEFAULT 0,
+	entry_date CHAR(10) DEFAULT 0,
+	brand VARCHAR(25) NOT NULL
+);
+
+CREATE TABLE emails (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	user_email CHAR(40) NOT NULL
+);
+
+CREATE TABLE invoices (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	invoice number INT NOT NULL,
+	purchase_date CHAR(10) NOT NULL,
+	user_email_id INT REFERENCES emails(id),
+	user_phone BIGINT DEFAULT 0,
+	employee_code CHAR(8) NOT NULL,
+	total_amount INT DEFAULT 0
+);
+
+CREATE TABLE invoices_products (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	invoices_id INT REFERENCES invoices(id),
+	products_id INT REFERENCES products(id),
+	quantity SMALLINT DEFAULT 0,
+	total_amount INT DEFAULT 0
+);
+
+CREATE TABLE shopping_products (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	emails_id INT REFERENCES emails(id),
+	products_id INT REFERENCES products(id)
+);
+
+
+
+**********************Adding the entried*******************************
+
+INSERT INTO products (code, name, price, entry_date,brand)
+	VALUES ('1423AF78', 'The one', 59000,'05/12/2024','Dolce & Gabbana');
+INSERT INTO products (code, name, price, entry_date,brand)
+	VALUES ('4523BD98', 'Erba Pura', 165000,'12/11/2024','Xerhoff');
+INSERT INTO products (code, name, price, entry_date,brand)
+	VALUES ('3425ED68', 'Naxos', 230000,'12/11/2024','Xerhoff');
+INSERT INTO products (code, name, price, entry_date,brand)
+	VALUES ('2534CA98', 'Blue de Channel', 109000,'05/01/2025','Channel');
+INSERT INTO products (code, name, price, entry_date,brand)
+	VALUES ('1523FB08', 'Eros Flame', 50000,'20/12/2024','Versace');
+INSERT INTO products (code, name, price, entry_date,brand)
+	VALUES ('5324BE88', 'Aventus ', 210000,'05/01/2025','Creed');
+INSERT INTO products (code, name, price, entry_date,brand)
+	VALUES ('1423AF79', 'Coco Mademoiselle', 105000,'05/01/2025','Channel');
+INSERT INTO products (code, name, price, entry_date,brand)
+	VALUES ('4523BD99', 'Good Girl Supreme', 72000,'20/12/2024','Carolina Herrera');
+INSERT INTO products (code, name, price, entry_date,brand)
+	VALUES ('3425ED69', 'Cloud', 46000,'05/12/2024','Ariana Grande');
+INSERT INTO products (code, name, price, entry_date,brand)
+	VALUES ('2534CA99', 'Miss Dior', 85000,'05/12/2024','Dior');
+
+********************************************************************
+
+INSERT INTO emails (user_email)
+	VALUES ('joshep.smith@test.com');
+INSERT INTO emails (user_email)
+	VALUES ('maria.jane@gmail.com');
+INSERT INTO emails (user_email)
+	VALUES ('jesus234@hotmail.com');
+INSERT INTO emails (user_email)
+	VALUES ('corey.scott@test.com');
+	
+********************************************************************
+INSERT INTO invoices (invoice, purchase_date, emails_id, user_phone,employee_code, total_amount)
+	VALUES (3541256, '07/12/2024', 1,50688888873,'A7B3C9D2',374000);
+INSERT INTO invoices (invoice, purchase_date, emails_id, user_phone,employee_code, total_amount)
+	VALUES (3541257, '22/12/2024', 3,50688888895,'A7B3C9D2',283000);
+INSERT INTO invoices (invoice, purchase_date, emails_id, user_phone,employee_code, total_amount)
+	VALUES (3541258, '05/01/2025', 4,50688408895,'X9F2D7A4',214000);
+INSERT INTO invoices (invoice, purchase_date, emails_id, user_phone,employee_code, total_amount)
+	VALUES (3541259, '06/01/2025', 2,50670178895,'X9F2D7A4',260000);
+
+**********************************************************************
+
+INSERT INTO invoices_products (invoices_id, products_id, quantity, total_amount)
+	VALUES (1, 1, 1,59000);
+INSERT INTO invoices_products (invoices_id, products_id, quantity, total_amount)
+	VALUES (1, 3, 1,230000);
+INSERT INTO invoices_products (invoices_id, products_id, quantity, total_amount)
+	VALUES (1, 10, 1,85000);
+INSERT INTO invoices_products (invoices_id, products_id, quantity, total_amount)
+	VALUES (2, 2, 1,165000);
+INSERT INTO invoices_products (invoices_id, products_id, quantity, total_amount)
+	VALUES (2, 8, 1,72000);
+INSERT INTO invoices_products (invoices_id, products_id, quantity, total_amount)
+	VALUES (2, 9, 1,46000);
+INSERT INTO invoices_products (invoices_id, products_id, quantity, total_amount)
+	VALUES (3, 4, 1,109000);
+INSERT INTO invoices_products (invoices_id, products_id, quantity, total_amount)
+	VALUES (3, 7, 1,105000);
+INSERT INTO invoices_products (invoices_id, products_id, quantity, total_amount)
+	VALUES (4, 5, 1,50000);
+INSERT INTO invoices_products (invoices_id, products_id, quantity, total_amount)
+	VALUES (4, 6, 1,210000);
+
+************************************************************************************
+INSERT INTO shopping_products (emails_id,products_id)
+	VALUES (1,1);
+INSERT INTO shopping_products (emails_id,products_id)
+	VALUES (1,3);
+INSERT INTO shopping_products (emails_id,products_id)
+	VALUES (1,10);
+INSERT INTO shopping_products (emails_id,products_id)
+	VALUES (2,2);
+INSERT INTO shopping_products (emails_id,products_id)
+	VALUES (2,8);
+INSERT INTO shopping_products (emails_id,products_id)
+	VALUES (2,9);
+INSERT INTO shopping_products (emails_id,products_id)
+	VALUES (3,4);
+INSERT INTO shopping_products (emails_id,products_id)
+	VALUES (3,7);
+INSERT INTO shopping_products (emails_id,products_id)
+	VALUES (4,5);
+INSERT INTO shopping_products (emails_id,products_id)
+	VALUES (4,6);
+
+
+********************************filter commands**************************************
+
+Obtenga todos los productos almacenados:
+
+SELECT *
+    FROM products
+
+Obtenga todos los productos que tengan un precio mayor a 50000
+
+SELECT *
+    FROM products
+	WHERE price > 50000
+
+
+3. Obtenga todas las compras de un mismo producto por id.
+SELECT *
+FROM invoices_products
+WHERE products_id = 3;
+
+4. Obtenga todas las compras agrupadas por producto, donde se muestre el total comprado entre todas las compras.
+
+5. Obtenga todas las facturas realizadas por el mismo comprador
+SELECT *
+    FROM invoices
+	WHERE employee_code = 'A7B3C9D2'
+	
+6. Obtenga todas las facturas ordenadas por monto total de forma descendente
+SELECT *
+    FROM invoices
+	ORDER BY total_amount DESC
+7. Obtenga una sola factura por número de factura.
+SELECT *
+FROM invoices
+WHERE invoice = 3541256;
