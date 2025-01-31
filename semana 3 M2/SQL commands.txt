@@ -150,6 +150,11 @@ FROM invoices_products
 WHERE products_id = 3;
 
 4. Obtenga todas las compras agrupadas por producto, donde se muestre el total comprado entre todas las compras.
+SELECT *
+    products_id
+    SUM(total_amount) AS total_bought
+FROM invoices_products
+GROUP BY products_id
 
 5. Obtenga todas las facturas realizadas por el mismo comprador
 SELECT *
