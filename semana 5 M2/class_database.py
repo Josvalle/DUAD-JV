@@ -112,9 +112,21 @@ class DatabaseComands():
 
         print("Connection changes committed")
     
-    def show_all_values(self,table):
+    def show_all_values_cars(self):
         result = self.db_manager.execute_query(
-            (f'SELECT * FROM lyfter_car_rental.{table} ;')
+            (f'SELECT * FROM lyfter_car_rental.cars ;')
+        )
+        return result
+    
+    def show_all_values_users(self):
+        result = self.db_manager.execute_query(
+            (f'SELECT * FROM lyfter_car_rental.users;')
+        )
+        return result
+    
+    def show_all_values_rentals(self):
+        result = self.db_manager.execute_query(
+            (f'SELECT * FROM lyfter_car_rental.rentals ;')
         )
         return result
     

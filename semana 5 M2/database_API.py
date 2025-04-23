@@ -12,7 +12,7 @@ db_manager = PgManager(
 
 user_commands = DatabaseComands(db_manager)
 
-@app.route("/new-user", methods=["POST"])
+@app.route("/users", methods=["POST"])
 def create_new_user():
     try:
         error = check_valid_values('name', 'email','username', 'date_of_birth', 'account_status')
@@ -29,7 +29,7 @@ def create_new_user():
     except:
         return jsonify('Something when wrong!')
 
-@app.route("/new-car", methods=["POST"])
+@app.route("/cars", methods=["POST"])
 def create_new_car():
     try:
         error = check_valid_values('maker','model','year_of_manufacture','car_status')
@@ -45,7 +45,7 @@ def create_new_car():
         return jsonify('Something when wrong!')
     
 
-@app.route("/new-rental", methods=["POST"])
+@app.route("/rentals", methods=["POST"])
 def create_new_rent():
     try:
         error = check_valid_values('user_id','cars_id','rental_status')
@@ -59,7 +59,7 @@ def create_new_rent():
     except:
         return jsonify('Something when wrong!')
 
-@app.route("/car-status-change", methods=["PUT"])
+@app.route("/cars/status", methods=["PUT"])
 def change_status_of_car():
     
     try:
@@ -74,7 +74,7 @@ def change_status_of_car():
     except:
         return jsonify('Something when wrong!')
 
-@app.route("/user-status-change", methods=["PUT"])
+@app.route("/users/status", methods=["PUT"])
 def change_status_of_user():
     try:
         error = check_valid_values('username','account_status')
@@ -87,7 +87,7 @@ def change_status_of_user():
     except:
         return jsonify('Something when wrong!')
 
-@app.route("/complete-rent", methods=["PUT"])
+@app.route("/rent/status/complete", methods=["PUT"])
 def complete_rent():
     try:
         error = check_valid_values('user_id','cars_id')
@@ -101,7 +101,7 @@ def complete_rent():
     except:
         return jsonify('Something when wrong!')
 
-@app.route("/rent-status", methods=["PUT"])
+@app.route("/rent/status", methods=["PUT"])
 def change_rental_status():
     try:
         error = check_valid_values('rent_id','rental_status')
@@ -114,7 +114,7 @@ def change_rental_status():
     except:
         return jsonify('Something when wrong!')
 
-@app.route("/user-overdue", methods=["PUT"])
+@app.route("/users/status/overdue", methods=["PUT"])
 def change_status_of_user_overdue():
     try:
         error = check_valid_values('username',)
@@ -128,20 +128,45 @@ def change_status_of_user_overdue():
         return jsonify('Something when wrong!')
     
 
-@app.route("/tables-info/<table>")
-def show_user_information(table):
+@app.route("/cars")
+def show_cars_information():
     try:
-        valid_tables = ['users','rentals','cars']
-        if table in valid_tables:
-            if request.args:
-                table_column = request.args.get('column')
-                table_filter = request.args.get('table_filter')
-                result = user_commands.show_filter_tables_queries(table,table_column,table_filter)
-                return result
-            else: 
-                result = user_commands.show_all_values(table)
-                
-                return result
+        if request.args:
+            table_column = request.args.get('column')
+            table_filter = request.args.get('table_filter')
+            result = user_commands.show_filter_tables_queries('cars',table_column,table_filter)
+            return result
+        else: 
+            result = user_commands.show_all_values_cars()
+            return result
+    except:
+        return jsonify('Something when wrong!')
+
+@app.route("/users")
+def show_users_information():
+    try:
+        if request.args:
+            table_column = request.args.get('column')
+            table_filter = request.args.get('table_filter')
+            result = user_commands.show_filter_tables_queries('users',table_column,table_filter)
+            return result
+        else: 
+            result = user_commands.show_all_values_users()
+            return result
+    except:
+        return jsonify('Something when wrong!')
+
+@app.route("/rentals")
+def show_rentals_information():
+    try:
+        if request.args:
+            table_column = request.args.get('column')
+            table_filter = request.args.get('table_filter')
+            result = user_commands.show_filter_tables_queries('rentals',table_column,table_filter)
+            return result
+        else: 
+            result = user_commands.show_all_values_rentals()
+            return result
     except:
         return jsonify('Something when wrong!')
 if __name__ == "__main__":
