@@ -101,7 +101,7 @@ class Cars():
             if user_id_value:
                 new_car = insert(self.cars_table).values(user_id = user_id_value, plate = plate_value)
             else:
-                new_car = insert(self.cars_table).values(user_id = None, plate = plate_value)
+                new_car = insert(self.cars_table).values(plate = plate_value,user_id = None)
             with engine.connect() as conn:
                 result = conn.execute(new_car)
                 conn.commit()
@@ -197,3 +197,4 @@ class UserAddress():
 
 
         
+

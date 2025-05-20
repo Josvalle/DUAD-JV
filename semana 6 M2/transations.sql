@@ -23,7 +23,7 @@ CREATE TABLE invoices (
 	status CHAR(10) NOT NULL
 );
 
--------------------------------------------------------
+
 BEGIN TRANSACTION;
 
 
@@ -55,7 +55,7 @@ WHERE code = '40304015'
 
 COMMIT
 
-------------------------------------------------
+
 
 BEGIN TRANSACTION;
 
