@@ -1,0 +1,21 @@
+------------------------------
+CREATE TABLE lyfter_table_orms.users (
+	id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	first_name VARCHAR(25) NOT NULL,
+	last_name VARCHAR(25) NOT NULL,
+	user_email CHAR(40) NOT NULL
+);
+
+CREATE TABLE lyfter_table_orms.user_address (
+	id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	user_id INTEGER NOT NULL,
+	address VARCHAR(150) NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES lyfter_table_orms.users(id)
+);
+
+CREATE TABLE lyfter_table_orms.cars (
+	id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	user_id INTEGER,
+	plate CHAR(6) NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES lyfter_table_orms.users(id)
+);
