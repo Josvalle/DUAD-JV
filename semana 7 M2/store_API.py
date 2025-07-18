@@ -1,5 +1,5 @@
 from flask import Flask,request,Response,jsonify
-from database_manager import User, Products,Invoices
+from database_manager import User, Products,Invoices,Cart,ProductCart,InvoiceProduct, admin_only
 from authenticator import JWT_Manager 
 
 app = Flask(__name__)
@@ -7,6 +7,10 @@ app = Flask(__name__)
 user = User()
 invoices = Invoices()
 products = Products()
+cart = Cart()
+product_cart = ProductCart()
+invoices_products = InvoiceProduct()
+
 jwt_manager = JWT_Manager()
 
 @app.route('/register', methods=['POST'])
@@ -17,8 +21,9 @@ def register():
     else:
         result = user.insert_user(data.get('username'), data.get('password'))
         user_id = result[0]
+        role = result[1]
 
-        token = jwt_manager.encode({'id':user_id})
+        token = jwt_manager.encode({'id':user_id, 'role': role})
         
         return jsonify(token=token)
 
@@ -34,7 +39,8 @@ def login():
             return Response(status=403)
         else:
             user_id = result[0]
-            token = jwt_manager.encode({'id':user_id})
+            role = result[3]
+            token = jwt_manager.encode({'id':user_id, 'role': role})
         
             return jsonify(token=token)
 
@@ -46,14 +52,15 @@ def me():
             token = token.replace("Bearer ","")
             decoded = jwt_manager.decode(token)
             user_id = decoded['id']
+            role_value = decoded['role']
             user_value = user.get_user_by_id(user_id)
-            return jsonify(id=user_id, username=user_value[1])
+            return jsonify(id=user_id, username=user_value[1], role=role_value)
         else:
             return Response(status=403)
     except Exception as e:
         return Response(status=500)
 
-@app.route('/purchase',methods=['POST'])
+@app.route('/cart/add',methods=['POST'])
 def new_purchase():
     try:
         token = request.headers.get('Authorization')
@@ -62,15 +69,91 @@ def new_purchase():
             token = token.replace("Bearer ","")
             decoded = jwt_manager.decode(token)
             user_id = decoded['id']
-            product = data.get('product')
+            product_id = data.get('product')
             quantity_of_product = data.get('quantity_of_product')
-            invoices.insert_new_invoice(user_id,product,quantity_of_product)
-            return jsonify('Purchase succesfully create', 200)
+            product_cart.insert_new_product_to_cart(user_id,product_id,quantity_of_product)
+            return jsonify('Product add to cart succesfully', 200)
         else:
             return Response(status=403)
     except Exception as e:
         return Response(status=500)
 
+@app.route('/cart/remove/product',methods=['DELETE'])
+def remove_product_from_cart():
+    try:
+        token = request.headers.get('Authorization')
+        data = request.get_json()
+        if(token is not None):
+            token = token.replace("Bearer ","")
+            decoded = jwt_manager.decode(token)
+            user_id = decoded['id']
+            product_id = data.get('product')
+            product_cart.remove_product_from_cart(user_id,product_id)
+            return jsonify('item remove correctly succesfully ', 200)
+        else:
+            return Response(status=403)
+    except Exception as e:
+        return Response(status=500)
+
+
+@app.route('/cart/modify/amount',methods=['POST'])
+def modify_amount_product():
+    try:
+        token = request.headers.get('Authorization')
+        data = request.get_json()
+        if(token is not None):
+            token = token.replace("Bearer ","")
+            decoded = jwt_manager.decode(token)
+            user_id = decoded['id']
+            product_id = data.get('product')
+            new_amount = data.get('new_amount')
+            product_cart.modify_amount(user_id,product_id,new_amount)
+            return jsonify('Product has been modified to cart succesfully', 200)
+        else:
+            return Response(status=403)
+    except Exception as e:
+        return Response(status=500)
+
+@app.route('/cart')
+def show_cart_items():
+    try:
+        token = request.headers.get('Authorization')
+        data = request.get_json()
+        if(token is not None):
+            token = token.replace("Bearer ","")
+            decoded = jwt_manager.decode(token)
+            user_id = decoded['id']
+            product_cart.show_cart_information(user_id)
+            return jsonify('Product has been modified to cart succesfully', 200)
+        else:
+            return Response(status=403)
+    except Exception as e:
+        return Response(status=500)
+
+
+@app.route('/complete/purchase', methods=['POST'])
+def complete_purhcase_and_cart():
+    try:
+        token = request.headers.get('Authorization')
+        if(token is not None):
+            token = token.replace("Bearer ","")
+            decoded = jwt_manager.decode(token)
+            user_id = decoded['id']
+            complete_cart = invoices.create_invoice(user_id)
+            invoice_id = complete_cart[0]
+            create_invoice_detail =  invoices_products.create_detail_invoice(invoice_id)
+            return jsonify({f"Success":"Your purchase is completed"}), 200
+    except Exception as e:
+        return Response(status=500)
+
+@app.route('/me/invoices/detail')
+def show_detail_invoice():
+    data = request.get_json()  # data is empty
+    if data.get('invoice_id') == None:
+        return Response(status=400)
+    else:
+        result_invoice = invoices_products.show_detail_invoice(data.get('invoice_id'))
+        return jsonify(result_invoice),200
 @app.route('/me/invoices')
 def my_invoices():
     try:
@@ -87,146 +170,73 @@ def my_invoices():
         return Response(status=500)
 
 @app.route('/user/modification', methods=['POST'])
+@admin_only
 def modify_user():
     try:
         data = request.get_json() 
-        token = request.headers.get('Authorization')
-        if(token is not None):
-            print('token exist')
-            token = token.replace("Bearer ","")
-            decoded = jwt_manager.decode(token)
-            user_id = decoded['id']
-            permition = user.get_user_role(user_id)
-            print(f'it is True:? {permition}')
-            if permition == True:
-                print('Modifying users...')
-                user.modify_user(int(data.get('user_id')),data.get('column'),data.get('new_value'))
-                return jsonify('User modify', 200)
-            else:
-                return Response(status=403)
-        else:
-            return Response(status=403)
+        user.modify_user(int(data.get('user_id')),data.get('column'),data.get('new_value'))
+        return jsonify('User modify', 200)
     except Exception as e:
         return Response(status=500)
 
 @app.route('/user/delete', methods=['DELETE'])
+@admin_only
 def delete_users():
-    print('function enter')
     try:
         data = request.get_json() 
-        token = request.headers.get('Authorization')
-        if(token is not None):
-            token = token.replace("Bearer ","")
-            decoded = jwt_manager.decode(token)
-            user_id = decoded['id']
-            permition = user.get_user_role(user_id)
-            if permition == True:
-                user.delete_user(data.get('user_id'))
-                return jsonify('user delete', 200)
-            else:
-                return Response(status=403)
-        else:
-            return Response(status=403)
+        user.delete_user(data.get('user_id'))
+        return jsonify('user delete', 200)
     except Exception as e:
         return Response(status=500)
 
 @app.route('/products/new_product', methods =['POST'])
+@admin_only
 def add_new_product():
     try:
         data = request.get_json() 
-        token = request.headers.get('Authorization')
-        if(token is not None):
-            token = token.replace("Bearer ","")
-            decoded = jwt_manager.decode(token)
-            user_id = decoded['id']
-            permition = user.get_user_role(user_id)
-            if permition == True:
-                products.insert_new_product(data.get('name'),data.get('price'),data.get('entry_date'), data.get('quantity'))
-                return jsonify(f'product: {data.get('name')} add', 200)
-            else:
-                return Response(status=403)
-        else:
-            return Response(status=403)
+        products.insert_new_product(data.get('name'),data.get('price'),data.get('entry_date'), data.get('quantity'))
+        return jsonify(f'product: {data.get('name')} add', 200)
     except Exception as e:
         return Response(status=500)
 
 
 @app.route('/products/modification', methods=['POST'])
+@admin_only
 def modify_product():
     try:
         data = request.get_json() 
-        token = request.headers.get('Authorization')
-        if(token is not None):
-            token = token.replace("Bearer ","")
-            decoded = jwt_manager.decode(token)
-            user_id = decoded['id']
-            permition = user.get_user_role(user_id)
-            if permition == True:
-                products.modify_product (data.get('product_id'),data.get('column'),data.get('new_value'))
-                return jsonify(f'Products has been modified', 200)
-            else:
-                return Response(status=403)
-        else:
-            return Response(status=403)
+        products.modify_product (data.get('product_id'),data.get('column'),data.get('new_value'))
+        return jsonify(f'Products has been modified', 200)
     except Exception as e:
         return Response(status=500)
 
 @app.route('/products/delete', methods=['DELETE'])
+@admin_only
 def delete_products():
     try:
         data = request.get_json() 
-        token = request.headers.get('Authorization')
-        if(token is not None):
-            token = token.replace("Bearer ","")
-            decoded = jwt_manager.decode(token)
-            user_id = decoded['id']
-            permition = user.get_user_role(user_id)
-            if permition == True:
-                products.delete_product (data.get('product_id'))
-                return jsonify(f'Product with ID: {data.get('product_id')} has been delete')
-            else:
-                return Response(status=403)
-        else:
-            return Response(status=403)
+        products.delete_product (data.get('product_id'))
+        return jsonify(f'Product with ID: {data.get('product_id')} has been delete')
     except Exception as e:
         return Response(status=500)
 
 @app.route('/invoices/modification', methods=['POST'])
+@admin_only
 def modify_invoice():
     try:
         data = request.get_json() 
-        token = request.headers.get('Authorization')
-        if(token is not None):
-            token = token.replace("Bearer ","")
-            decoded = jwt_manager.decode(token)
-            user_id = decoded['id']
-            permition = user.get_user_role(user_id)
-            if permition == True:
-                invoices.modify_invoice (data.get('invoice_id'),data.get('column'),data.get('new_value'))
-                return jsonify(f'The invoice with id {data.get('invoice_id')} has been modified ', 200)
-            else:
-                return Response(status=403)
-        else:
-            return Response(status=403)
+        invoices.modify_invoice (data.get('invoice_id'),data.get('column'),data.get('new_value'))
+        return jsonify(f'The invoice with id {data.get('invoice_id')} has been modified ', 200)
     except Exception as e:
         return Response(status=500)
 
 @app.route('/invoices/delete', methods=['DELETE'])
+@admin_only
 def delete_invoice():
     try:
         data = request.get_json() 
-        token = request.headers.get('Authorization')
-        if(token is not None):
-            token = token.replace("Bearer ","")
-            decoded = jwt_manager.decode(token)
-            user_id = decoded['id']
-            permition = user.get_user_role(user_id)
-            if permition == True:
-                invoices.delete_invoice (data.get('invoice_id'))
-            else:
-                return Response(status=403)
-        else:
-            return Response(status=403)
+        invoices.delete_invoice (data.get('invoice_id'))
+            
     except Exception as e:
         return Response(status=500)
 

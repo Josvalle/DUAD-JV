@@ -1,14 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy import MetaData
-from sqlalchemy import Table, Column, Integer, String, literal_column
-from sqlalchemy import insert, select, update,delete
+from sqlalchemy import Table, Column, Integer, String, literal_column, and_
+from sqlalchemy import insert, select, update,delete,func
 from authenticator import JWT_Manager 
+from flask import jsonify,request,Response
+from functools import wraps
 
-# class DBManger():
-#     def __init__(self):
-#         self.engine = create_engine('postgresql://postgres:!23J0$ue@localhost:5432/postgres')
-#         self.metadata_obj = MetaData()
-# jwt_manager = JWT_Manager ()
+jwt_manager = JWT_Manager ()
 engine = create_engine('postgresql://postgres:!23J0$ue@localhost:5432/postgres')
 metadata_obj = MetaData()
 
@@ -18,7 +16,7 @@ class User():
     
     
     def insert_user(self, username, password, ):
-        stmt = insert(self.users_table).returning(self.users_table.c.id).values(username=username, password=password, role = 'user')
+        stmt = insert(self.users_table).returning(self.users_table.c.id, self.users_table.c.role).values(username=username, password=password, role = 'user')
         with engine.connect() as conn:
             result = conn.execute(stmt)
             conn.commit()
@@ -44,27 +42,14 @@ class User():
                 return None
             else:
                 return users[0]
-    
-    def get_user_role(self,id):
-        stmt = select(self.users_table.c.role).where(self.users_table.c.id == id)
-        with engine.connect() as conn:
-            result = conn.execute(stmt).scalar()
-            if result.strip().lower() == 'admin':
-                print('true')
-                return True
-            elif result.strip().lower() == 'user':
-                print('false')
-                return False
-    
     def modify_user(self, id, column, new_value ):
-         
-         try:
+        try:
             column_modification = literal_column(column)
             modification = (update(self.users_table).where(self.users_table.c.id == id).values({column_modification: new_value}))
             with engine.begin() as conn:
                     result = conn.execute(modification)
                     
-         except:
+        except:
             return('Something when wrong!')
     
 
@@ -88,9 +73,9 @@ class Products():
             result = conn.execute(stmt)
             conn.commit()
     
-    def show_products(self, product = None):
-        if product != None:
-            stmt = select(self.products_table).where(self.products_table.c.name == product)
+    def show_products(self, id = None):
+        if id != None:
+            stmt = select(self.products_table).where(self.products_table.c.id == id)
             with engine.connect() as conn:
                 result = conn.execute(stmt)
                 conn.commit()
@@ -103,7 +88,7 @@ class Products():
             return result
     
     def verify_available_stock(self, product):
-        stock = select(self.products_table.c.quantity).where(self.products_table.c.name == product)
+        stock = select(self.products_table.c.quantity).where(self.products_table.c.id == product)
         with engine.connect() as conn:
                 result = conn.execute(stock).scalar()
                 conn.commit()
@@ -134,12 +119,6 @@ class Products():
                     result = conn.execute(modification)
         except:
             return('Something when wrong!')
-    
-    def update_product_quantity(self, id, new_value): 
-         modification = (update(self.products_table).where(self.products_table.c.id == id).values(quantity=new_value))
-         with engine.begin() as conn:
-              result = conn.execute(modification)
-            
 
     def delete_product(self, id):
         try:
@@ -150,32 +129,164 @@ class Products():
         except Exception as ex:
             print(ex)
 
+class Cart():
+    def __init__(self):
+        self.cart_table = Table('carts', metadata_obj, autoload_with=engine, schema='fruits_store' )
+
+    def create_new_cart(self,user_id,):
+        stmt = insert(self.cart_table).values(user_id=user_id, status = 'Active')
+        with engine.connect() as conn:
+            result = conn.execute(stmt)
+            conn.commit()
+    
+    def check_if_user_as_active_car(self, user_id):
+        status_cart = select(self.cart_table.c.status).where(self.cart_table.c.user_id == user_id)
+        with engine.connect() as conn:
+                result = conn.execute(status_cart).scalar()
+                conn.commit()
+        if result.strip().lower() == 'active':
+            return True
+        else:
+            return False
+    
+    def obtain_cart_id(self, user_id):
+        active_cart = self.check_if_user_as_active_car(user_id)
+        if active_cart == True:
+            cart_id = select(self.cart_table.c.id).where(self.cart_table.c.user_id == user_id)
+        if active_cart == False:
+            create_cart = self.create_new_cart(user_id)
+            cart_id = select(self.cart_table.c.id).where(self.cart_table.c.user_id == user_id)
+
+        
+        with engine.connect() as conn:
+                result = conn.execute(cart_id).scalar()
+                conn.commit()
+        return result
 
 
+class ProductCart():
+    def __init__(self):
+        self.product_cart_table = Table('products_carts', metadata_obj, autoload_with=engine, schema='fruits_store' )
+        self.products_table = Products()
+        self.cart_table = Cart()
+    
+    def insert_new_product_to_cart(self, user_id, product_id,quantity_of_product):
+        available_product = self.products_table.verify_available_stock(product_id)
+        if available_product > quantity_of_product:
+            new_quantity = available_product - quantity_of_product
+            cart_id = self.cart_table.obtain_cart_id(user_id)
+            stmt = insert(self.product_cart_table).values(cart_id=cart_id, products_id=product_id, amount = quantity_of_product)
+            update_product = (update(self.products_table.products_table).where(self.products_table.products_table.c.id == product_id).values(quantity=new_quantity))
+            with engine.begin() as conn:
+                conn.execute(stmt)
+                conn.execute(update_product)
+        else:
+            return('Stock for  product is lower that quantity need it ')
+    
+    def remove_product_from_cart(self,user_id,product_id):
+        active_cart = self.cart_table.check_if_user_as_active_car(user_id)
+        if active_cart == True:
+            available_product = self.products_table.verify_available_stock(product_id)
+            amount_query = select(self.product_cart_table.c.amount).where(and_(self.product_cart_table.c.cart_id == cart_id, self.product_cart_table.c.product_id == product_id))
+            cart_id_query = select(self.cart_table.cart_table.c.id).where(self.cart_table.cart_table.c.user_id == user_id)
+            with engine.begin() as conn:
+                amount = conn.execute(amount_query).scalar()
+                cart_id = conn.execute(cart_id_query).scalar()
+                new_quantity = available_product + amount
+                delete_product_from_cart = delete(self.product_cart_table
+                                            ).where(
+                                                and_(self.product_cart_table.c.product_id == product_id,self.product_cart_table.c.cart_id == cart_id))
+                update_product = (update(self.products_table.products_table).where(self.products_table.products_table.c.id == product_id).values(quantity=new_quantity))
+            
+                conn.execute(delete_product_from_cart)
+                conn.execute(update_product)
+            
+        else:
+            jsonify({"error":'Your purchase is already complete, please contact support for refound '}), 409
+    
+    def modify_amount(self,user_id,product_id,new_amount):
+        cart_id_query = select(self.cart_table.cart_table.c.id).where(self.cart_table.cart_table.c.user_id == user_id)
+        amount_query = select(self.product_cart_table.c.amount).where(and_(self.product_cart_table.c.cart_id == cart_id, self.product_cart_table.c.product_id == product_id))
+        with engine.begin() as conn:
+                amount = conn.execute(amount_query).scalar()
+                cart_id = conn.execute(cart_id_query).scalar()
+        if (amount-new_amount) == 0:
+            return jsonify({"error":"If you want to reduce the amount to 0, please remove the product from the cart"}),400
+        if (amount-new_amount)>0:
+            update_new_amount = (update(self.product_cart_table).where(and_(self.product_cart_table.c.product_id == product_id,self.product_cart_table.c.cart_id == cart_id)).values(amount=new_amount))
+            with engine.begin() as conn:
+                conn.execute(update_new_amount)
+    
+    def show_cart_information(self,user_id):
+        active_cart = self.cart_table.check_if_user_as_active_car(user_id)
+        if active_cart == True:
+            cart_id_query = select(self.cart_table.cart_table.c.id).where(self.cart_table.cart_table.c.user_id == user_id)
+            with engine.begin() as conn:
+                cart_id = conn.execute(cart_id_query).scalar()
+                stmt = select(self.product_cart_table).where(self.product_cart_table.c.cart_id == cart_id)
+                result = conn.execute(stmt)
+                return result
 
+
+class InvoiceProduct():
+    def __init__(self):
+        self.invoices_products_table = Table('invoices_products', metadata_obj, autoload_with=engine, schema='fruits_store' )
+        self.product_cart_table = Table('products_carts', metadata_obj, autoload_with=engine, schema='fruits_store' )
+        self.invoice_table = Table('invoices', metadata_obj, autoload_with=engine, schema='fruits_store')
+
+
+    def create_detail_invoice(self,invoice_id):
+        cart_id_query = select(self.invoice_table.c.cart_id).where(self.invoice_table.c.id == invoice_id)
+        with engine.begin() as conn:
+            cart_id = conn.execute(cart_id_query).scalar()
+            product_amount_query = select(self.product_cart_table.c.product_id, self.product_cart_table.c.amount).where(
+                self.product_cart_table.c.cart_id == cart_id
+            )
+            product_amount = conn.execute(product_amount_query).fetchall()
+            for product, amount in product_amount:
+                stmt = insert(self.invoices_products_table).values(invoice_id = invoice_id, product_id = product, amount = amount)
+                conn.execute(stmt)
+
+
+    def show_detail_invoice(self,invoice_id):
+        stmt = select(self.invoices_products_table).where(self.invoices_products_table.c.invoice_id == invoice_id)
+        with engine.connect() as conn:
+            result = conn.execute(stmt)
+            conn.commit()
+        return result
 
 
 class Invoices():
     def __init__(self):
         self.invoice_table = Table('invoices', metadata_obj, autoload_with=engine, schema='fruits_store')
-        self.products_table = Products()
+        self.products_table = Table('products', metadata_obj, autoload_with=engine, schema='fruits_store')
+        self.products_cart_table = Table('products_carts', metadata_obj, autoload_with=engine, schema='fruits_store' )
+        self.cart_table = Cart()
     
-    def insert_new_invoice(self, user_id, product,quantity_of_product):
-        print('start function')
-        product_id = self.products_table.obtain_id_product(product)
-        available_product = self.products_table.verify_available_stock(product)
-        
-        if available_product > quantity_of_product:
-             new_quantity = available_product - quantity_of_product
-             total = self.products_table.obtain_price_product(product_id, quantity_of_product)
-             stmt = insert(self.invoice_table).values(user_id=user_id, products_id=product_id, total_amount = total)
-             update_product = self.products_table.update_product_quantity(product_id,new_quantity)
-             with engine.begin() as conn:
-                result = conn.execute(stmt)
+    def create_invoice(self, user_id):
+        active_cart = self.cart_table.check_if_user_as_active_car(user_id)
+        if active_cart == True:
+            cart_id_query = select(self.cart_table.cart_table.c.id).where(self.cart_table.cart_table.c.user_id == user_id)
+            total_price_query = select(func.sum(self.products_cart_table.c.amount * self.products_table.c.price)
+                        ).join(self.products_table, self.products_cart_table.c.product_id == self.products_table.c.id
+                            ).where(self.products_cart_table.c.cart_id == cart_id)
+            with engine.begin() as conn:
+                cart_id = conn.execute(cart_id_query).scalar()
+                total_price = conn.execute(total_price_query).scalar()
                 
-                
+                complete_invoice = insert(self.invoice_table
+                                        ).returning(self.invoice_table.c.id
+                                                    ).values(user_id = user_id, price = total_price, cart_id = cart_id)
+                update_cart_status = (update(self.cart_table.cart_table
+                                            ).where(self.cart_table.cart_table.c.id == cart_id
+                                                    ).values(status = 'complete'))
+                result = conn.execute(complete_invoice)
+                conn.execute(update_cart_status)
+                return result.scalar()
         else:
-            return('Available product is lower that quantity need it ')
+            return jsonify({"error":"You do not have any active cart"}), 400
+    
+    
     
     def show_invoices_per_client(self, client):
             stmt = select(self.invoice_table).where(self.invoice_table.c.user_id == client)
@@ -197,7 +308,7 @@ class Invoices():
 
     def delete_invoice(self, id):
         try:
-            delete_invoice = delete(self.invoice_table).where(self.invoice_table == id)
+            delete_invoice = delete(self.invoice_table).where(self.invoice_table.c.id == id)
             with engine.begin() as conn:
                     result = conn.execute(delete_invoice)
                     
@@ -205,8 +316,18 @@ class Invoices():
             print(ex)
 
 
-# def id_getter(token):
-#     token = token.replace("Bearer ","")
-#     decoded = jwt_manager.decode(token)
-#     user_id = decoded['id']
-#     return user_id
+def admin_only(func):
+    @wraps(func)
+    def wrapper(*args,**kwargs):
+        token = request.headers.get('Authorization')
+        if(token is not None):
+            token = token.replace("Bearer ","")
+            decoded = jwt_manager.decode(token)
+            role_value = decoded['role']
+            if role_value != 'admin':
+                return jsonify({"error":'You are not allow to perform this action '}), 403
+            return func(*args, **kwargs)
+        else:
+            return Response(status=403)
+    return wrapper
+
