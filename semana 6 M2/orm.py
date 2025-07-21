@@ -3,7 +3,7 @@ from  sqlalchemy import MetaData, create_engine, select, inspect, Table, Column,
 
 db_URI = 'postgresql://postgres:!23J0$ue@localhost:5432/postgres'
 
-engine = create_engine(db_URI) #echo=True)
+engine = create_engine(db_URI) 
 metadata_obj = MetaData()
 
 def check_if_table_exist():
