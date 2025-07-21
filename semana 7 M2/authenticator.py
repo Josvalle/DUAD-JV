@@ -12,7 +12,7 @@ class JWT_Manager:
             encoded = jwt.encode(data, self.private_key, algorithm="RS256")
             return encoded
         except Exception as e:
-            print('esta vara esta fallando por: ',e)
+            print(f"Error: {e}")
             return None
 
     def decode(self, token):

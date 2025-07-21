@@ -15,7 +15,7 @@ jwt_manager = JWT_Manager()
 
 @app.route('/register', methods=['POST'])
 def register():
-    data = request.get_json()  # data is empty
+    data = request.get_json() 
     if(data.get('username') == None or data.get('password') == None):
         return Response(status=400)
     else:
@@ -29,7 +29,7 @@ def register():
 
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()  # data is empty
+    data = request.get_json()  
     if(data.get('username') == None or data.get('password') == None):
         return Response(status=400)
     else:
@@ -148,7 +148,7 @@ def complete_purhcase_and_cart():
 
 @app.route('/me/invoices/detail')
 def show_detail_invoice():
-    data = request.get_json()  # data is empty
+    data = request.get_json() 
     if data.get('invoice_id') == None:
         return Response(status=400)
     else:
