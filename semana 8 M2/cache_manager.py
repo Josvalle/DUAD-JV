@@ -1,6 +1,9 @@
 import redis
 from functools import wraps
-from flask import jsonify
+from flask import jsonify, request
+from authenticator import JWT_Manager 
+
+
 
 class CacheManager:
     def __init__(self, host, port, password, *args, **kwargs):
@@ -60,17 +63,26 @@ class CacheManager:
         except redis.RedisError as error:
             print(f"An error ocurred while deleting data from Redis: {error}")
 
-# cache = CacheManager('PLACEHOLDER',PLACEHOLDER,'PLACEHOLDER')
+cache = CacheManager('PLACEHOLDER','PLACEHOLDER','PLACEHOLDER')
+jwt_manager = JWT_Manager()
 
+def check_cache(key, combine):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if combine:
+                token = request.headers.get('Authorization')
+                token = token.replace("Bearer ","")
+                decoded = jwt_manager.decode(token)
+                user_id = decoded['id']
+                final_key = f'{key}_{user_id}'
+            else:  
+                final_key = key
 
-# def check_cache(key):
-#     def decorator(func):
-#         @wraps(func)
-#         def wrapper(*args, **kwargs):
-#             exists, _ = cache.check_key(key)
-#             if exists:
-#                 data = cache.get_data(key)
-#                 return jsonify(data), 200
-#             return func(*args, **kwargs)
-#         return wrapper
-#     return decorator
+            exists = cache.check_key(final_key)
+            if exists:
+                data = cache.get_data(final_key)
+                return jsonify(data), 200
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator

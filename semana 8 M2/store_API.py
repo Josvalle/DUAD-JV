@@ -123,7 +123,7 @@ def modify_amount_product():
         return Response(status=500)
 
 @app.route('/cart')
-# @check_cache('cart')
+@check_cache('cart',True)
 def show_cart_items():
     try:
         token = request.headers.get('Authorization')
@@ -132,8 +132,6 @@ def show_cart_items():
             token = token.replace("Bearer ","")
             decoded = jwt_manager.decode(token)
             user_id = decoded['id']
-            if cache.check_key(user_id):
-                return jsonify(cache.get_data(user_id)), 200
             cart_information = product_cart.show_cart_information(user_id)
             cache.store_data(user_id, cart_information)
             return jsonify(cart_information),200
@@ -172,6 +170,7 @@ def show_detail_invoice():
         result_invoice = invoices_products.show_detail_invoice(data.get('invoice_id'))
         return jsonify(result_invoice),200
 @app.route('/me/invoices')
+@check_cache('Invoice',True)
 def my_invoices():
     try:
         token = request.headers.get('Authorization')
@@ -180,8 +179,6 @@ def my_invoices():
             decoded = jwt_manager.decode(token)
             user_id = decoded['id']
             cache_key_invoice = f'Invoice_{user_id}'
-            if cache.check_key(cache_key_invoice ):
-                return jsonify(cache.get_data(cache_key_invoice )), 200
             invoices = Invoices.show_invoices_per_client(user_id)
             cache.store_data(cache_key_invoice,invoices)
             return jsonify(invoices, 200)
@@ -223,12 +220,9 @@ def add_new_product():
         return Response(status=500)
 
 @app.route('/products/list')
+@check_cache('products',False)
 def show_list_products():
     try:
-        if cache.check_key('products'):
-            return jsonify(cache.get_data('products')), 200
-        
-        else:
             result = products.show_products()
             cache.store_data("products",result)
             return jsonify(result), 200
