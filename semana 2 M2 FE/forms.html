@@ -1,0 +1,32 @@
+<html>
+  <h1>Formulario de Votacion</h1>
+  <form action="https://vote.gov/es" method="POST">
+    <label for="nombre_completo"> Nombre completo </label>
+    <br />
+    <input type="text" id="nombre_completo" name="nombre_completo" />
+    <br />
+    <label for="correo"> Correo electronico </label>
+    <br />
+    <input type="text" id="correo" name="correo" />
+    <br />
+    <label for="identification"> Numero de identification </label>
+    <br />
+    <input type="text" id="identification" name="identification" />
+    <br />
+    <label for="telefono"> Numero de telefono </label>
+    <br />
+    <input type="text" id="telefono" name="telefono" />
+    <br />
+    <label for="candidatos"></label>
+    <br />
+    <select name="candidatos" id="candidatos">
+      <option hidden>Selecione su candidato</option>
+      <option value="candidato_1">Candidato #1</option>
+      <option value="candidato_2">Candidato #2</option>
+      <option value="candidato_3">Candidato #3</option>
+    </select>
+    <br />
+    <br />
+    <input type="submit" value="Confirmar Votacion" />
+  </form>
+</html>
