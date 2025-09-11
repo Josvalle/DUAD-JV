@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <div id="parent_div">
+    <form action="https://dummyjson.com/test" method="POST">
+      <h1>Contact us!</h1>
+      <p>Got something to say? Fire away!</p>
+      <input
+        class="text"
+        type="text"
+        id="first_name"
+        name="firstName"
+        placeholder="First name*"
+      />
+
+      <input
+        class="text"
+        type="text"
+        id="last_name"
+        name="lastName"
+        placeholder="Last name*"
+      />
+
+      <input
+        class="text"
+        type="text"
+        id="email"
+        name="email"
+        placeholder="Email*"
+      />
+    </form>
+
+    <select class="text" name="type" id="type">
+      <option hidden>What's your message about?*</option>
+      <option value="question">Question</option>
+      <option value="suggestion">Suggestion</option>
+    </select>
+    <br />
+    <br />
+    <label class="text" for="message">Fire away!</label>
+    <br />
+    <br />
+
+    <textarea class="text" id="message" name="message"></textarea>
+
+    <input class="text" id="submit" type="submit" value="Send my message" />
+    <img id="icon" src="power.png" />
+  </div>
+</html>

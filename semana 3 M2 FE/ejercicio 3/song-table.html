@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Song table</title>
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="div-global">
+      <div class="div-table" id="first-table">
+        <table>
+          <thead>
+            <tr>
+              <th><h1>Billboard Hot 100™</h1></th>
+              <th><input type="text" id="search-bar" /></th>
+              <th>WEEK OF SEPTEMBER 08,2025</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="div-table" id="second-table">
+        <table>
+          <thead>
+            <th class="th-song">THIS WEEK</th>
+            <th class="th-song" id="song-image"></th>
+            <th class="th-song" id="song-possition"></th>
+            <th class="th-song" id="song-name"></th>
+            <th class="th-song" id="plus-icon"></th>
+            <th class="th-song" id="song award">AWARD</th>
+            <th class="th-song" id="song-week">LAST WEEK</th>
+            <th class="th-song" id="song-peak">PEAK POS</th>
+            <th class="th-song" id="song-wks">WKS ON CHART</th>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="first-position" id="possition-1">
+                <p class="possition-value">1</p>
+              </th>
+              <th class="first-position" id="image-1">
+                <img id="image_1" src="position1.jpg" />
+              </th>
+              <th class="first-position"><p id="list-position">NEW</p></th>
+              <th class="first-position">
+                <h2 class="name-1">Break stuck</h2>
+                <p class="name-1" id="message-name-1">Link Bizkit</p>
+              </th>
+              <th class="first-position">
+                <svg
+                  class="plus-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#6b7280"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </th>
+              <th class="first-position" id="award-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="black"
+                  stroke="black"
+                  stroke-width="1.5"
+                >
+                  <circle cx="12" cy="12" r="10" fill="none" />
+                  <path
+                    d="M12 7.2 
+                            L13.76 10.8 
+                            L17.7 11.3 
+                            L14.85 13.9 
+                            L15.6 17.8 
+                            L12 15.9 
+                            L8.4 17.8 
+                            L9.15 13.9 
+                            L6.3 11.3 
+                            L10.24 10.8 
+                            Z"
+                  />
+                </svg>
+              </th>
+              <th class="first-position">
+                <p id="last-week-1" class="last-column">-</p>
+              </th>
+              <th class="first-position" id="peak-1">
+                <p class="last-column">1</p>
+              </th>
+              <th class="first-position" id="WKS-1">
+                <p class="last-column">1</p>
+              </th>
+            </tr>
+            <tr>
+              <th class="other-row" id="possition-2">
+                <p class="possition">2</p>
+              </th>
+              <th class="other-row">
+                <img class="image-table" src="position2.jpg" />
+              </th>
+              <th class="other-row">
+                <svg
+                  class="position-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#C51F1F" />
+                  <g
+                    fill="none"
+                    stroke="#FFFFFF"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="12" y1="7" x2="12" y2="15" />
+                    <path d="M8.5 11.5 L12 15 L15.5 11.5" />
+                  </g>
+                </svg>
+              </th>
+              <th class="other-row">
+                <h2 class="name-2">Rollin</h2>
+                <p class="name-2" id="message-name-2">Link Bizkit</p>
+              </th>
+              <th class="other-row">
+                <svg
+                  class="plus-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#6b7280"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </th>
+              <th class="other-row" id="award-2"></th>
+              <th class="other-row"><p class="last-week">1</p></th>
+              <th class="other-row" id="peak-2"><p class="peak-week">1</p></th>
+              <th class="other-row"><p class="wks-c">12</p></th>
+            </tr>
+            <tr>
+              <th class="other-row" id="possition-3">
+                <p class="possition">3</p>
+              </th>
+              <th class="other-row">
+                <img class="image-table" src="position3.jpg" />
+              </th>
+              <th class="other-row">
+                <svg
+                  class="position-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#C51F1F" />
+                  <g
+                    fill="none"
+                    stroke="#FFFFFF"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="12" y1="7" x2="12" y2="15" />
+                    <path d="M8.5 11.5 L12 15 L15.5 11.5" />
+                  </g>
+                </svg>
+              </th>
+              <th class="other-row">
+                <h2 class="name-2">Last Resort</h2>
+                <p class="name-2" id="message-name-2">Papa Roach</p>
+              </th>
+              <th class="other-row">
+                <svg
+                  class="plus-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#6b7280"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </th>
+              <th class="other-row" id="award-3"></th>
+              <th class="other-row"><p class="last-week">2</p></th>
+              <th class="other-row" id="peak-3"><p class="peak-week">1</p></th>
+              <th class="other-row"><p class="wks-c">39</p></th>
+            </tr>
+            <tr>
+              <th class="other-row" id="possition-3">
+                <p class="possition">4</p>
+              </th>
+              <th class="other-row">
+                <img class="image-table" src="position4.jpg" />
+              </th>
+              <th class="other-row">
+                <svg
+                  class="position-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="12" cy="12" r="10" fill="#7A7D8C" />
+
+                  <g
+                    fill="none"
+                    stroke="#FFFFFF"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                    <path d="M12 8 L16 12 L12 16" />
+                  </g>
+                </svg>
+              </th>
+              <th class="other-row">
+                <h2 class="name-2">Scars</h2>
+                <p class="name-2" id="message-name-2">Papa Roach</p>
+              </th>
+              <th class="other-row">
+                <svg
+                  class="plus-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#6b7280"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </th>
+              <th class="other-row" id="award-4"></th>
+              <th class="other-row"><p class="last-week">4</p></th>
+              <th class="other-row" id="peak-4"><p class="peak-week">5</p></th>
+              <th class="other-row"><p class="wks-c">25</p></th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
