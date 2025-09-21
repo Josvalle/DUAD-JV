@@ -1,0 +1,150 @@
+
+#div-global{
+    margin-left: 10em;
+    margin-right: 10em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.div-table{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.50rem;
+}
+
+h1{
+    font-weight: bolder;
+    font-size:1.75em;
+}
+#search-bar{
+    width: 40rem;
+    margin: 1em;
+}
+.th-song{
+    color: white;
+    background-color: blue;
+    height: 3.5em;
+    
+}
+
+table{
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.first-position{
+    width: 2em;
+    height: 2em;
+}
+
+#image_1{
+    width: 21rem;
+    height: 21rem;
+}
+
+#possition-1{
+    color:white;
+    background-color: black;
+}
+
+.possition-value{
+    font-weight: bolder;
+    font-size: 1.50em;
+}
+
+#list-position{
+    background-color: yellow;
+    font-weight: bolder;
+    margin-left: 0.50em;
+    margin-right: 0.50em;
+}
+
+.plus-icon{
+    height: 1.5em;
+    width: 1.5em;
+}
+
+#song-name{
+    width: 15rem;
+}
+
+.name-1{
+    text-align: left;
+    margin-bottom: 0;
+}
+
+#message-name-1{
+    margin-top: 0.5em;
+}
+
+.name-2{
+    text-align: left;
+    margin-bottom: 0;
+}
+
+#message-name-2{
+    margin-top: 0.5em;
+}
+
+.image-table{
+    width: 7.5rem;
+    height: 7.5rem;
+}
+
+.other-row{
+width: 10em;
+height: 10em;
+}
+
+.possition{
+    color:white;
+    font-weight: bolder;
+    font-size: 1.50em;
+}
+
+#possition-2{
+    background-color: black;
+}
+
+.position-icon{
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.last-column{
+    font-weight: bolder;
+    font-size: 2em;
+}
+#possition-3{
+    background-color: black;
+}
+
+#award-1{
+    background-color: rgb(224, 224, 224);
+}
+#award-2{
+    background-color: rgb(224, 224, 224);
+}
+#award-3{
+    background-color: rgb(224, 224, 224);
+}
+
+#award-4{
+    background-color: rgb(224, 224, 224);
+}
+
+
+#peak-1{
+    background-color: rgb(224, 224, 224);
+}
+
+#peak-2{
+    background-color: rgb(224, 224, 224);
+}
+
+#peak-3{
+    background-color: rgb(224, 224, 224);
+}
+
+#peak-4{
+    background-color: rgb(224, 224, 224);
+}

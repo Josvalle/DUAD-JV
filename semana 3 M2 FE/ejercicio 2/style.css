@@ -1,0 +1,62 @@
+#global-div{
+    padding-left: 20em;
+    padding-right: 20em;
+    text-align: center;
+    width: 75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body{
+    font-family: Helvetica,arial, sans-serif;
+}
+p{
+    text-align: left;
+}
+
+h1{
+    font-weight: bold;
+}
+.icons{
+    height: 20px;
+    width: 20px;
+    margin: 0.75em;
+}
+#blog-image{
+    border-radius: 6px;
+    width: 60em;
+}
+#text-submit{
+    display: flex;
+}
+
+#p-submit{
+    flex: 1;
+}
+#promote-id{
+    background-color: rgba(240, 184, 80, 0.877);
+    border-radius: 4px;
+    width: 20em;
+    margin: 0.50em;
+    
+    
+}
+#promte-message{
+    text-align: center;
+    font-size: 1.15rem;
+    padding: 0.5em;
+    margin-bottom: 0;
+    
+}
+#submit{
+    color: white;
+    background-color: black;
+    padding: 1em;
+    margin-bottom: 1em;
+    border-radius: 3px;
+}
+
+.body-div{
+    width: 60em;
+}
