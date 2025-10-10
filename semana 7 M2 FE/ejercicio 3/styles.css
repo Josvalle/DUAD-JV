@@ -1,0 +1,30 @@
+.global{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.red{
+    background-color: red;
+}
+
+.blue{
+    background-color: blue;
+}
+
+.green{
+    background-color: green;
+}
+
+.yellow{
+    background-color: yellow;
+}
+
+.cyan{
+    background-color: cyan;
+}
+
+.pink{
+    background-color: pink;
+}
