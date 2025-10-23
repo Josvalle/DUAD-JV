@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login page</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="global-div">
+      <div id="body-div">
+        <h2 class="text">Login</h2>
+        <input
+          type="text"
+          class="input-text"
+          id="user-login"
+          placeholder="Please enter your user id"
+        />
+        <input
+          class="input-text"
+          type="password"
+          name="password"
+          id="password-id"
+          placeholder="Please enter your password"
+        />
+        <button type="button" id="login-button" class="buttons">Login</button>
+        <a href="registration-page.html" class="links"> Create an account</a>
+        <a href="change-password.html" class="links">Change password?</a>
+      </div>
+    </div>
+  </body>
+  <script src="scripts/scriptLogin.js"></script>
+</html>
