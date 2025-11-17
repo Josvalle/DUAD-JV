@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>to-do-list</title>
+    <link rel="icon" href="imgs/8019152-removebg-preview.png" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <header>
+    <div class="nav-bar">
+      <nav class="nav-bar-container">
+        <div class="nav-containers">
+          <img src="imgs/8019152-removebg-preview.png" id="nav-icon" />
+          <h2 class="todo-title">To do list</h2>
+        </div>
+        <div id="button-w-message">
+          <p id="welco-user">*welcome message*</p>
+          <button type="button" id="close-user" class="buttons">
+            close session
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <body>
+    <div class="global-div-todo">
+      <div id="to-do-div">
+        <div id="input-div">
+          <input
+            type="text"
+            id="task-input"
+            placeholder="Enter you next task"
+          />
+          <button type="button" id="add-task-button" class="buttons">
+            Add task
+          </button>
+          <div id="filter-div">
+            <p>Filter:</p>
+            <input type="radio" name="filter" id="none" />
+            <label for="none">None</label>
+            <input type="radio" name="filter" id="complete" />
+            <label for="complete">Completed</label>
+            <input type="radio" name="filter" id="incomplete" />
+            <label for="incomplete">Incomplete</label>
+          </div>
+        </div>
+        <div class="div-table">
+          <table>
+            <thead id="head-table">
+              <tr>
+                <th class="th-task" id="th-position">#</th>
+                <th class="th-task" id="th-name">Task</th>
+                <th class="th-task" id="th-status">Status</th>
+                <th class="th-task" id="th-action">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer id="todo-footer">
+    <div id="footer-div"><a href="about.html">About Dev</a></div>
+  </footer>
+  <script src="scripts/toDoListScript.js"></script>
+</html>
